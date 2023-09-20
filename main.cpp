@@ -2,45 +2,47 @@
 #include <fstream>
 #include <ctime>
 #include <cstring>
+#include <sstream>
 
 #include "list.h"
 
 using namespace std;
 
-int commandAdd(ifstream &ist, List *objs) {
-    std::string command;
-    ist >> command;
-    if (command == "circle") {
+void commandAdd(std::string command, List *objs) {
+    std::stringstream ss(command);
+    string type = "";
+    ss >> type;
+    if (type == "circle") {
         int x = 0, y = 0, r = 0;
         string tmp_color = "";
-        ist >> x >> y >> r >> tmp_color;
+        ss >> x >> y >> r >> tmp_color;
         if (x == 0 || y == 0 || r == 0 || tmp_color == "") {
             cout << "error input file: not enough data";
-            return 1;
+            return;
         }
 
         FlatGeometryFig* new_obj = new Circle(x, y, r, tmp_color);
         objs->addList(new_obj);
     }
-    else if (command == "rectangle") {
+    else if (type == "rectangle") {
         float x1 = 0, x2 = 0;
         string tmp_color = "";
-        ist >> x1 >> x2 >> tmp_color;
+        ss >> x1 >> x2 >> tmp_color;
         if (x1 == 0 || x2 == 0 || tmp_color == "") {
             cout << "error input file: not enough data";
-            return 1;
+            return;
         }
 
         FlatGeometryFig* new_obj = new Rectangle(x1, x2, tmp_color);
         objs->addList(new_obj);
     }
-    else if (command == "triangle") {
+    else if (type == "triangle") {
         float x1 = 0, x2 = 0, x3 = 0;
         string tmp_color = "";
-        ist >> x1 >> x2 >> x3 >> tmp_color;
+        ss >> x1 >> x2 >> x3 >> tmp_color;
         if (x1 == 0 || x2 == 0 || x3 == 0 || tmp_color == "") {
             cout << "error input file: not enough data";
-            return 1;
+            return;
         }
 
         FlatGeometryFig* new_obj = new Triangle(x1, x2, x3, tmp_color);
@@ -48,25 +50,25 @@ int commandAdd(ifstream &ist, List *objs) {
     }
     else {
         cout << "error input file: not found object";
-        return 1;
+        return;
     }
-    return 0;
+    return;
 }
 
-int commandRem(ifstream &ist, List *objs) {
+void commandRem(std::string command, List *objs) {
     // *
     // color    ?
     // (figure) color   ?
     //          (?, ?, ?)
-
-    std::string command;
-    ist >> command;
+    std::stringstream ss(command);
+    string type = "";
+    ss >> type;
 
     if (command == "*") {
         objs->deleteList();
     }
     else if (command == "color") {
-        ist >> command;
+        ss >> command;
         FlatGeometryFig *check;
         if (check->convertToEnum(command) != color_figure::ERROR) {
             int tmp_size = objs->getSize();
@@ -82,13 +84,13 @@ int commandRem(ifstream &ist, List *objs) {
             }
         }
         else {
-            return 1;
+            return;
         }
     }
     else if (command == "circle") {
         FlatGeometryFig *check;
         int x, y, r;
-        ist >> x >> y >> r;
+        ss >> x >> y >> r;
 
         int tmp_size = objs->getSize();
         for (int i = 0; i < tmp_size; ++i) {
@@ -104,7 +106,7 @@ int commandRem(ifstream &ist, List *objs) {
     else if (command == "rectangle") {
         FlatGeometryFig *check;
         float x1, x2;
-        ist >> x1 >> x2;
+        ss >> x1 >> x2;
 
         int tmp_size = objs->getSize();
         for (int i = 0; i < tmp_size; ++i) {
@@ -120,7 +122,7 @@ int commandRem(ifstream &ist, List *objs) {
     else if (command == "triangle") {
         FlatGeometryFig *check;
         float x1, x2, x3;
-        ist >> x1 >> x2 >> x3;
+        ss >> x1 >> x2 >> x3;
 
         int tmp_size = objs->getSize();
         for (int i = 0; i < tmp_size; ++i) {
@@ -134,7 +136,7 @@ int commandRem(ifstream &ist, List *objs) {
         }
     }
 
-    return 0;
+    return;
 }
 
 int main()
@@ -143,7 +145,8 @@ int main()
     ifstream ist("input.txt");
 
     if (!ist.is_open()) {
-        cout << "File is not opened";
+        cout << "File is not opened!\n";
+        return -1;
     }
 
     string command;
@@ -151,10 +154,12 @@ int main()
 
     while (!ist.eof()) {
         if (command == "add") {
-            commandAdd(ist, &objs);
+            std::getline(ist, command);
+            commandAdd(command, &objs);
         }
         else if (command == "rem") {
-            commandRem(ist, &objs);
+            std::getline(ist, command);
+            commandRem(command, &objs);
         }
         else if (command == "print") {
             objs.printList();
