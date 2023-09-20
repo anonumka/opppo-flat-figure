@@ -65,6 +65,8 @@ void List::deleteList() {
         head = tmp_head;
         size--;
     }
+    head = nullptr;
+    tail = nullptr;
 }
 
 void List::printList() {
