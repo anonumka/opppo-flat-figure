@@ -15,7 +15,8 @@ enum class ERROR_TYPE {
     COLOR_NOT_FOUND = 3,
     NOT_FOUND_COMMAND = 4,
     LIST_EMPTY = 5,
-    ERROR = 6
+    BAD_COLOR = 6,
+    ERROR = 7
 };
 
 class MainProcess

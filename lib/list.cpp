@@ -24,7 +24,6 @@ void List::addList(FlatGeometryFig* new_obj) {
         head = tmp;
         tail = tmp;
     }
-
     size++;
 }
 

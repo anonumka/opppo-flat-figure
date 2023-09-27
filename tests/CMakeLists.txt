@@ -18,4 +18,4 @@ target_link_libraries(test_program
   LibsModule
 )
 
-add_test(GeometrysTests test_program)
+add_test(CircleTests test_program)

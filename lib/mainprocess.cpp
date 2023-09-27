@@ -18,9 +18,14 @@ int MainProcess::commandAdd(std::string command) {
             cout << "error input file: not enough data";
             return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
-
         FlatGeometryFig* new_obj = new Circle(x, y, r, tmp_color);
+
+        if (new_obj->getColor() == COLOR_FIGURE::ERROR) {
+            return static_cast<int>(ERROR_TYPE::BAD_COLOR);
+        }
+
         objs->addList(new_obj);
+
     }
     else if (type == "rectangle") {
         float x1 = 0, x2 = 0;
@@ -30,8 +35,12 @@ int MainProcess::commandAdd(std::string command) {
             cout << "error input file: not enough data";
             return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
-
         FlatGeometryFig* new_obj = new Rectangle(x1, x2, tmp_color);
+
+        if (new_obj->getColor() == COLOR_FIGURE::ERROR) {
+            return static_cast<int>(ERROR_TYPE::BAD_COLOR);
+        }
+
         objs->addList(new_obj);
     }
     else if (type == "triangle") {
@@ -42,8 +51,12 @@ int MainProcess::commandAdd(std::string command) {
             cout << "error input file: not enough data";
             return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
-
         FlatGeometryFig* new_obj = new Triangle(x1, x2, x3, tmp_color);
+
+        if (new_obj->getColor() == COLOR_FIGURE::ERROR) {
+            return static_cast<int>(ERROR_TYPE::BAD_COLOR);
+        }
+
         objs->addList(new_obj);
     }
     else {
