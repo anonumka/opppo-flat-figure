@@ -1,19 +1,18 @@
-cmake_minimum_required(VERSION 3.5)
-
-project(opppo-flat-figure LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.14)
+project(flat_figure LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-file(GLOB SOURCES
-    src/*.h
-    src/*.cpp
-)
+enable_testing()
 
-add_executable(opppo-flat-figure ${SOURCES}
-    src/main.h)
+include_directories(LibsModule)
+link_directories(LibsModule)
+include_directories(main_program)
+link_directories(main_program)
+include_directories(test_program)
+link_directories(test_program)
 
-install(TARGETS opppo-flat-figure
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
+add_subdirectory(lib)
+add_subdirectory(src)
+add_subdirectory(tests)

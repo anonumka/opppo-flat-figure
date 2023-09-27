@@ -21,7 +21,7 @@ public:
     int getSize();
     void deleteElem(int i);
     void deleteList();
-    void printList();
+    int printList();
 };
 
 #endif // LIST_H

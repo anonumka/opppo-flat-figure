@@ -1,4 +1,5 @@
 #include "list.h"
+#include "mainprocess.h"
 
 List::List() {
     head = nullptr;
@@ -69,13 +70,12 @@ void List::deleteList() {
     tail = nullptr;
 }
 
-void List::printList() {
+int List::printList() {
     Node *tmp_head = head;
     int tmp_size = size;
 
     if (tmp_size == 0) {
-        std::cout << "List is empty" << '\n';
-        return;
+        return static_cast<int>(ERROR_TYPE::LIST_EMPTY);
     }
 
     while (tmp_size != 0) {
@@ -83,6 +83,8 @@ void List::printList() {
         tmp_head = tmp_head->next;
         tmp_size--;
     }
+
+    return static_cast<int>(ERROR_TYPE::OK);
 }
 
 FlatGeometryFig* List::getElem(int ind) {

@@ -6,7 +6,7 @@
 #include <cstring>
 #include <string>
 
-enum class color_figure {
+enum class COLOR_FIGURE {
     RED = 0,
     ORANGE = 1,
     YELLOW = 2,
@@ -20,14 +20,14 @@ enum class color_figure {
 class FlatGeometryFig {
 protected:
     std::string date_edit;
-    color_figure color;
+    COLOR_FIGURE color;
 public:
     FlatGeometryFig() {}
     ~FlatGeometryFig() {}
 
-    color_figure convertToEnum(std::string color);
-    std::string convertToString(color_figure color);
-    color_figure getColor() { return color; };
+    COLOR_FIGURE convertToEnum(std::string color);
+    std::string convertToString(COLOR_FIGURE color);
+    COLOR_FIGURE getColor() { return color; };
 
     std::string current_date() {
         time_t now = time(0);
