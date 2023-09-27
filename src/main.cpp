@@ -1,14 +1,11 @@
 #include <iostream>
-#include <fstream>
-#include <ctime>
-#include <cstring>
-#include <sstream>
 
+#include "main.h"
 #include "list.h"
 
 using namespace std;
 
-void commandAdd(std::string command, List *objs) {
+int MainProcess::commandAdd(std::string command, List *objs) {
     std::stringstream ss(command);
     string type = "";
     ss >> type;
@@ -18,7 +15,7 @@ void commandAdd(std::string command, List *objs) {
         ss >> x >> y >> r >> tmp_color;
         if (x == 0 || y == 0 || r == 0 || tmp_color == "") {
             cout << "error input file: not enough data";
-            return;
+            return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
 
         FlatGeometryFig* new_obj = new Circle(x, y, r, tmp_color);
@@ -30,7 +27,7 @@ void commandAdd(std::string command, List *objs) {
         ss >> x1 >> x2 >> tmp_color;
         if (x1 == 0 || x2 == 0 || tmp_color == "") {
             cout << "error input file: not enough data";
-            return;
+            return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
 
         FlatGeometryFig* new_obj = new Rectangle(x1, x2, tmp_color);
@@ -42,7 +39,7 @@ void commandAdd(std::string command, List *objs) {
         ss >> x1 >> x2 >> x3 >> tmp_color;
         if (x1 == 0 || x2 == 0 || x3 == 0 || tmp_color == "") {
             cout << "error input file: not enough data";
-            return;
+            return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
 
         FlatGeometryFig* new_obj = new Triangle(x1, x2, x3, tmp_color);
@@ -50,12 +47,12 @@ void commandAdd(std::string command, List *objs) {
     }
     else {
         cout << "error input file: not found object";
-        return;
+        return static_cast<int>(ERROR_TYPE::NOT_FOUND_OBJ);
     }
-    return;
+    return static_cast<int>(ERROR_TYPE::OK);
 }
 
-void commandRem(std::string command, List *objs) {
+int MainProcess::commandRem(std::string command, List *objs) {
     // *
     // color    ?
     // (figure) color   ?
@@ -70,7 +67,7 @@ void commandRem(std::string command, List *objs) {
     else if (command == "color") {
         ss >> command;
         FlatGeometryFig *check;
-        if (check->convertToEnum(command) != color_figure::ERROR) {
+        if (check->convertToEnum(command) != COLOR_FIGURE::ERROR) {
             int tmp_size = objs->getSize();
 
             for (int i = 0; i < tmp_size; ++i) {
@@ -84,7 +81,7 @@ void commandRem(std::string command, List *objs) {
             }
         }
         else {
-            return;
+            return static_cast<int>(ERROR_TYPE::COLOR_NOT_FOUND);
         }
     }
     else if (command == "circle") {
@@ -136,10 +133,10 @@ void commandRem(std::string command, List *objs) {
         }
     }
 
-    return;
+    return static_cast<int>(ERROR_TYPE::OK);
 }
 
-int main()
+int MainProcess::run()
 {
     List objs;
     ifstream ist("input.txt");
@@ -172,5 +169,5 @@ int main()
         ist >> command;
     }
 
-    return 0;
+    return static_cast<int>(ERROR_TYPE::OK);
 }

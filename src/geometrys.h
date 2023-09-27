@@ -1,3 +1,6 @@
+#ifndef GEOMETRYS_H
+#define GEOMETRYS_H
+
 #include <ctime>
 #include <iostream>
 #include <cstring>
@@ -124,3 +127,5 @@ public:
     int checkParamsCircle(int, int, int) override { return 0; };
     int checkParamsRectangle(float, float) override { return 0; };
 };
+
+#endif // LIST_H

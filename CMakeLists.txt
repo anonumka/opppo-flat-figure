@@ -10,7 +10,8 @@ file(GLOB SOURCES
     src/*.cpp
 )
 
-add_executable(opppo-flat-figure ${SOURCES})
+add_executable(opppo-flat-figure ${SOURCES}
+    src/main.h)
 
 install(TARGETS opppo-flat-figure
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

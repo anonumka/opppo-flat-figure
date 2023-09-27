@@ -1,3 +1,6 @@
+#ifndef LIST_H
+#define LIST_H
+
 #include "geometrys.h"
 
 struct Node {
@@ -20,3 +23,5 @@ public:
     void deleteList();
     void printList();
 };
+
+#endif // LIST_H

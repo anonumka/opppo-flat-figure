@@ -1,2 +1,2 @@
 # Убираем cmake-юзеров
-*.txt.user
+*.txt.user*

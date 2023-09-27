@@ -1,50 +1,50 @@
 #include "geometrys.h"
 
-color_figure FlatGeometryFig::convertToEnum(std::string color) {
+COLOR_FIGURE FlatGeometryFig::convertToEnum(std::string color) {
     if (color == "red") {
-        return color_figure::RED;
+        return COLOR_FIGURE::RED;
     }
     else if (color == "orange") {
-        return color_figure::ORANGE;
+        return COLOR_FIGURE::ORANGE;
     }
     else if (color == "yellow") {
-        return color_figure::YELLOW;
+        return COLOR_FIGURE::YELLOW;
     }
     else if (color == "green") {
-        return color_figure::GREEN;
+        return COLOR_FIGURE::GREEN;
     }
     else if (color == "azure") {
-        return color_figure::AZURE;
+        return COLOR_FIGURE::AZURE;
     }
     else if (color == "blue") {
-        return color_figure::BLUE;
+        return COLOR_FIGURE::BLUE;
     }
     else if (color == "purple"){
-        return color_figure::PURPLE;
+        return COLOR_FIGURE::PURPLE;
     }
-    return color_figure::ERROR;
+    return COLOR_FIGURE::ERROR;
 }
 
-std::string FlatGeometryFig::convertToString(color_figure color) {
-    if (color == color_figure::RED) {
+std::string FlatGeometryFig::convertToString(COLOR_FIGURE color) {
+    if (color == COLOR_FIGURE::RED) {
         return "red";
     }
-    else if (color == color_figure::ORANGE) {
+    else if (color == COLOR_FIGURE::ORANGE) {
         return "orange";
     }
-    else if (color == color_figure::YELLOW) {
+    else if (color == COLOR_FIGURE::YELLOW) {
         return "yellow";
     }
-    else if (color == color_figure::GREEN) {
+    else if (color == COLOR_FIGURE::GREEN) {
         return "green";
     }
-    else if (color == color_figure::AZURE) {
+    else if (color == COLOR_FIGURE::AZURE) {
         return "azure";
     }
-    else if (color == color_figure::BLUE) {
+    else if (color == COLOR_FIGURE::BLUE) {
         return "blue";
     }
-    else if (color == color_figure::PURPLE){
+    else if (color == COLOR_FIGURE::PURPLE){
         return "purple";
     }
 
