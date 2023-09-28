@@ -12,22 +12,22 @@ enum class ERROR_TYPE {
     OK = 0,
     NOT_ENOUGHT_DATA = 1,
     NOT_FOUND_OBJ = 2,
-    COLOR_NOT_FOUND = 3,
+    COLOR_NOT_EXIST = 3,
     NOT_FOUND_COMMAND = 4,
     LIST_EMPTY = 5,
-    BAD_COLOR = 6,
-    ERROR = 7
+    GEO_NOT_FOUND = 6,
+    BAD_REMOVE = 7,
+    ERROR = 8
 };
 
 class MainProcess
 {
 public:
     MainProcess();
+    ~MainProcess();
     int commandAdd(std::string command);
     int commandRem(std::string command);
-    int run();
-
-private:
+    int run(std::string path_file);
     List *objs;
 };
 

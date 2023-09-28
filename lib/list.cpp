@@ -56,6 +56,8 @@ void List::deleteElem(int i) {
         delete tmp_node;
     }
     size--;
+
+    return;
 }
 
 void List::deleteList() {
