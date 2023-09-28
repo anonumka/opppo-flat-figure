@@ -29,6 +29,10 @@ public:
     int commandRem(std::string command);
     int run(std::string path_file);
     List *objs;
+private:
+    int commandRemFigure(std::string type_figure);
+    int commandRemFigureParams(std::stringstream &ss, std::string type_figure);
+    int commandRemColor(std::stringstream &ss);
 };
 
 #endif // MAIN_H
