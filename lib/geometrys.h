@@ -37,9 +37,6 @@ public:
     }
 
     virtual void print() = 0;
-    virtual int checkParamsCircle(int, int, int) = 0;
-    virtual int checkParamsRectangle(float, float) = 0;
-    virtual int checkParamsTriangle(float, float, float) = 0;
 };
 
 class Circle : public FlatGeometryFig {
@@ -60,15 +57,12 @@ public:
              << ", last date edit = " << date_edit;
     }
 
-    int checkParamsCircle(int x, int y, int r) override {
+    int checkParamsCircle(int x, int y, int r) {
         if (this->x == x && this->y == y && this->r == r) {
             return 1;
         }
         return 0;
     }
-
-    int checkParamsRectangle(float, float) override { return 0; };
-    int checkParamsTriangle(float, float, float) override { return 0; };
 };
 
 class Rectangle : public FlatGeometryFig {
@@ -88,15 +82,12 @@ public:
              << ", last date edit = " << date_edit;
     }
 
-    int checkParamsRectangle(float x1, float x2) override {
+    int checkParamsRectangle(float x1, float x2) {
         if (this->x1 == x1 && this->x2 == x2) {
             return 1;
         }
         return 0;
     }
-
-    int checkParamsCircle(int, int, int) override { return 0; };
-    int checkParamsTriangle(float, float, float) override { return 0; };
 };
 
 class Triangle : public FlatGeometryFig {
@@ -117,15 +108,12 @@ public:
              << ", last date edit = " << date_edit;
     }
 
-    int checkParamsTriangle(float x1, float x2, float x3) override {
+    int checkParamsTriangle(float x1, float x2, float x3) {
         if (this->x1 == x1 && this->x2 == x2 && this->x3 == x3) {
             return 1;
         }
         return 0;
     }
-
-    int checkParamsCircle(int, int, int) override { return 0; };
-    int checkParamsRectangle(float, float) override { return 0; };
 };
 
 #endif // LIST_H

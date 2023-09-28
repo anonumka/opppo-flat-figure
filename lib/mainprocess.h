@@ -15,7 +15,7 @@ enum class ERROR_TYPE {
     COLOR_NOT_EXIST = 3,
     NOT_FOUND_COMMAND = 4,
     LIST_EMPTY = 5,
-    GEO_NOT_FOUND = 6,
+    FILE_NOT_FOUND = 6,
     BAD_REMOVE = 7,
     ERROR = 8
 };

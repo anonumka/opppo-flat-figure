@@ -19,11 +19,22 @@ int MainProcess::commandAdd(std::string command) {
     if (type == "circle") {
         int x = 0, y = 0, r = 0;
         string tmp_color = "";
-        ss >> x >> y >> r >> tmp_color;
-        if (x == 0 || y == 0 || r == 0 || tmp_color == "") {
-            // cout << "error input file: not enough data";
+
+        vector<string>output;
+        std::string value;
+        while (ss >> value){
+            output.push_back(value);
+        }
+        if (output.size() == 4) {
+            std::istringstream (output[0]) >> x;
+            std::istringstream (output[1]) >> y;
+            std::istringstream (output[2]) >> r;
+            tmp_color = output[3];
+        }
+        else {
             return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
+        
         FlatGeometryFig* new_obj = new Circle(x, y, r, tmp_color);
 
         if (new_obj->getColor() == COLOR_FIGURE::ERROR) {
@@ -35,13 +46,22 @@ int MainProcess::commandAdd(std::string command) {
     else if (type == "rectangle") {
         float x1 = 0, x2 = 0;
         string tmp_color = "";
-        ss >> x1 >> x2 >> tmp_color;
-        if (x1 == 0 || x2 == 0 || tmp_color == "") {
-            // cout << "error input file: not enough data";
+        
+        vector<string>output;
+        std::string value;
+        while (ss >> value){
+            output.push_back(value);
+        }
+        if (output.size() == 3) {
+            std::istringstream (output[0]) >> x1;
+            std::istringstream (output[1]) >> x2;
+            tmp_color = output[2];
+        }
+        else {
             return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
-        FlatGeometryFig* new_obj = new Rectangle(x1, x2, tmp_color);
 
+        FlatGeometryFig* new_obj = new Rectangle(x1, x2, tmp_color);
         if (new_obj->getColor() == COLOR_FIGURE::ERROR) {
             return static_cast<int>(ERROR_TYPE::COLOR_NOT_EXIST);
         }
@@ -51,11 +71,22 @@ int MainProcess::commandAdd(std::string command) {
     else if (type == "triangle") {
         float x1 = 0, x2 = 0, x3 = 0;
         string tmp_color = "";
-        ss >> x1 >> x2 >> x3 >> tmp_color;
-        if (x1 == 0 || x2 == 0 || x3 == 0 || tmp_color == "") {
-            // cout << "error input file: not enough data";
+        
+        vector<string>output;
+        std::string value;
+        while (ss >> value){
+            output.push_back(value);
+        }
+        if (output.size() == 4) {
+            std::istringstream (output[0]) >> x1;
+            std::istringstream (output[1]) >> x2;
+            std::istringstream (output[2]) >> x3;
+            tmp_color = output[3];
+        }
+        else {
             return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
+
         FlatGeometryFig* new_obj = new Triangle(x1, x2, x3, tmp_color);
 
         if (new_obj->getColor() == COLOR_FIGURE::ERROR) {
@@ -96,7 +127,6 @@ int MainProcess::commandRem(std::string command) {
             // Пока существуют элементы - удаляем
             for (int i = 0; i < tmp_size; i) {
                 check = objs->getElem(i);
-                // cout << typeid(*check).name();
                 if (check->getColor() == check->convertToEnum(del_color)) {
                     objs->deleteElem(i);
                     i = 0;
@@ -112,50 +142,142 @@ int MainProcess::commandRem(std::string command) {
         }
     }
     else if (type == "circle") {
-        FlatGeometryFig *check;
-        int x, y, r;
-        ss >> x >> y >> r;
+        if (ss.rdbuf()->in_avail() == 0) {
+            FlatGeometryFig *check;
+            int tmp_size = objs->getSize();
+            for (int i = 0; i < tmp_size; i) {
+                check = objs->getElem(i);
+                std::string type = typeid(*check).name();
+                type.erase(0, 1);
+                if (type == "Circle") {
+                    objs->deleteElem(i);
+                    i = 0;
+                    tmp_size = objs->getSize();
+                }
+                else {
+                    i++;
+                }
+            }
+        }
+        else {
+            int x, y, r;
+            Circle *check;
+            vector<string>output;
+            std::string value;
+            while (ss >> value){
+                output.push_back(value);
+            }
+            if (output.size() == 3) {
+                std::istringstream (output[0]) >> x;
+                std::istringstream (output[1]) >> y;
+                std::istringstream (output[2]) >> r;
+            }
+            else {
+                return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
+            }
 
-        int tmp_size = objs->getSize();
-        for (int i = 0; i < tmp_size; ++i) {
-            check = objs->getElem(i);
-            if (check->checkParamsCircle(x, y, r)) {
-                objs->deleteElem(i);
+            int tmp_size = objs->getSize();
+            for (int i = 0; i < tmp_size; ++i) {
+                check = static_cast<Circle*>(objs->getElem(i));
+                if (check->checkParamsCircle(x, y, r)) {
+                    objs->deleteElem(i);
 
-                i = 0;
-                tmp_size = objs->getSize();
+                    i = 0;
+                    tmp_size = objs->getSize();
+                }
             }
         }
     }
     else if (type == "rectangle") {
-        FlatGeometryFig *check;
-        float x1, x2;
-        ss >> x1 >> x2;
+        if (ss.rdbuf()->in_avail() == 0) {
+            FlatGeometryFig *check;
+            int tmp_size = objs->getSize();
+            for (int i = 0; i < tmp_size; i) {
+                check = objs->getElem(i);
+                std::string type = typeid(*check).name();
+                type.erase(0, 1);
+                if (type == "Rectangle") {
+                    objs->deleteElem(i);
+                    i = 0;
+                    tmp_size = objs->getSize();
+                }
+                else {
+                    i++;
+                }
+            }
+        }
+        else {
+            float x1, x2;
+            Rectangle *check;
+            vector<string>output;
+            std::string value;
+            while (ss >> value){
+                output.push_back(value);
+            }
+            if (output.size() == 2) {
+                std::istringstream (output[0]) >> x1;
+                std::istringstream (output[1]) >> x2;
+            }
+            else {
+                return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
+            }
 
-        int tmp_size = objs->getSize();
-        for (int i = 0; i < tmp_size; ++i) {
-            check = objs->getElem(i);
-            if (check->checkParamsRectangle(x1, x2)) {
-                objs->deleteElem(i);
+            int tmp_size = objs->getSize();
+            for (int i = 0; i < tmp_size; ++i) {
+                check = static_cast<Rectangle*>(objs->getElem(i));
+                if (check->checkParamsRectangle(x1, x2)) {
+                    objs->deleteElem(i);
 
-                i = 0;
-                tmp_size = objs->getSize();
+                    i = 0;
+                    tmp_size = objs->getSize();
+                }
             }
         }
     }
     else if (type == "triangle") {
-        FlatGeometryFig *check;
-        float x1, x2, x3;
-        ss >> x1 >> x2 >> x3;
+        if (ss.rdbuf()->in_avail() == 0) {
+            FlatGeometryFig *check;
+            int tmp_size = objs->getSize();
+            for (int i = 0; i < tmp_size; i) {
+                check = objs->getElem(i);
+                std::string type = typeid(*check).name();
+                type.erase(0, 1);
+                if (type == "Triangle") {
+                    objs->deleteElem(i);
+                    i = 0;
+                    tmp_size = objs->getSize();
+                }
+                else {
+                    i++;
+                }
+            }
+        }
+        else {
+            float x1, x2, x3;
+            Triangle *check;
+            vector<string>output;
+            std::string value;
+            while (ss >> value){
+                output.push_back(value);
+            }
+            if (output.size() == 3) {
+                std::istringstream (output[0]) >> x1;
+                std::istringstream (output[1]) >> x2;
+                std::istringstream (output[2]) >> x3;
+            }
+            else {
+                return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
+            }
 
-        int tmp_size = objs->getSize();
-        for (int i = 0; i < tmp_size; ++i) {
-            check = objs->getElem(i);
-            if (check->checkParamsTriangle(x1, x2, x3)) {
-                objs->deleteElem(i);
+            int tmp_size = objs->getSize();
+            for (int i = 0; i < tmp_size; ++i) {
+                check = static_cast<Triangle*>(objs->getElem(i));
+                if (check->checkParamsTriangle(x1, x2, x3)) {
+                    objs->deleteElem(i);
 
-                i = 0;
-                tmp_size = objs->getSize();
+                    i = 0;
+                    tmp_size = objs->getSize();
+                }
             }
         }
     }
@@ -172,7 +294,7 @@ int MainProcess::run(std::string path_file)
 
     if (!ist.is_open()) {
         cout << "File is not opened!\n";
-        return -1;
+        return static_cast<int>(ERROR_TYPE::FILE_NOT_FOUND);
     }
 
     string command;
