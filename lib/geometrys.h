@@ -25,8 +25,8 @@ public:
     FlatGeometryFig() {}
     ~FlatGeometryFig() {}
 
-    COLOR_FIGURE convertToEnum(std::string color);
     std::string convertToString(COLOR_FIGURE color);
+    COLOR_FIGURE convertToEnum(std::string color);
     COLOR_FIGURE getColor() { return color; };
 
     std::string current_date() {
@@ -43,9 +43,7 @@ class Circle : public FlatGeometryFig {
 private:
     int x, y, r;
 public:
-    Circle(int x, int y, int r, std::string color);
-
-    int Circle::init();
+    int init(std::string x, std::string y, std::string r, std::string color);
 
     void print() override {
         std::cout << "circle (" << x << ", " << y << ", " << r << "), color = " << convertToString(color)
@@ -64,13 +62,7 @@ class Rectangle : public FlatGeometryFig {
 private:
     float x1, x2;
 public:
-    Rectangle(float x1, float x2, std::string color)
-        : FlatGeometryFig () {
-        this->x1 = x1;
-        this->x2 = x2;
-        this->color = this->convertToEnum(color);
-        this->date_edit = current_date();
-    }
+    int init(std::string x1, std::string x2, std::string color);
 
     void print() override {
         std::cout << "rectangle (" << x1 << ", " << x2 << "), color = " << convertToString(color)
@@ -89,14 +81,7 @@ class Triangle : public FlatGeometryFig {
 private:
     float x1, x2, x3;
 public:
-    Triangle(float x1, float x2, float x3, std::string color)
-        : FlatGeometryFig () {
-        this->x1 = x1;
-        this->x2 = x2;
-        this->x3 = x3;
-        this->color = this->convertToEnum(color);
-        this->date_edit = current_date();
-    }
+    int init(std::string x1, std::string x2, std::string x3, std::string color);
 
     void print() override {
         std::cout << "triangle (" << x1 << ", " << x2 << ", " << x3 << "), color = " << convertToString(color)

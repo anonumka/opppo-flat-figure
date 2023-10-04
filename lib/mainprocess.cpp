@@ -143,83 +143,70 @@ int MainProcess::commandAdd(std::string command) {
     string type = "";
     ss >> type;
     if (type == "circle") {
-        int x = 0, y = 0, r = 0;
-        string tmp_color = "";
-
         vector<string>output;
         std::string value;
         while (ss >> value){
             output.push_back(value);
         }
-        if (output.size() == 4) {
-            std::istringstream (output[0]) >> x;
-            std::istringstream (output[1]) >> y;
-            std::istringstream (output[2]) >> r;
-            tmp_color = output[3];
-        }
-        else {
+        if (output.size() != 4) {
             return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
         
-        FlatGeometryFig* new_obj = new Circle(x, y, r, tmp_color);
-
-        if (new_obj->getColor() == COLOR_FIGURE::ERROR) {
+        FlatGeometryFig* new_obj = new Circle();
+        if (new_obj->convertToEnum(output[3]) == COLOR_FIGURE::ERROR) {
             return static_cast<int>(ERROR_TYPE::COLOR_NOT_EXIST);
         }
 
-        objs->addList(new_obj);
+        if (!static_cast<Circle*>(new_obj)->init(output[0], output[1], output[2], output[3])) {
+            objs->addList(new_obj);
+        }
+        else {
+            return static_cast<int>(ERROR_TYPE::BAD_INPUT);
+        }    
     }
     else if (type == "rectangle") {
-        float x1 = 0, x2 = 0;
-        string tmp_color = "";
-        
         vector<string>output;
         std::string value;
         while (ss >> value){
             output.push_back(value);
         }
-        if (output.size() == 3) {
-            std::istringstream (output[0]) >> x1;
-            std::istringstream (output[1]) >> x2;
-            tmp_color = output[2];
-        }
-        else {
+        if (output.size() != 3) {
             return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
 
-        FlatGeometryFig* new_obj = new Rectangle(x1, x2, tmp_color);
-        if (new_obj->getColor() == COLOR_FIGURE::ERROR) {
+        FlatGeometryFig* new_obj = new Rectangle();
+        if (new_obj->convertToEnum(output[2]) == COLOR_FIGURE::ERROR) {
             return static_cast<int>(ERROR_TYPE::COLOR_NOT_EXIST);
         }
 
-        objs->addList(new_obj);
+        if (!static_cast<Rectangle*>(new_obj)->init(output[0], output[1], output[2])) {
+            objs->addList(new_obj);
+        }
+        else {
+            return static_cast<int>(ERROR_TYPE::BAD_INPUT);
+        }
     }
     else if (type == "triangle") {
-        float x1 = 0, x2 = 0, x3 = 0;
-        string tmp_color = "";
-        
         vector<string>output;
         std::string value;
         while (ss >> value){
             output.push_back(value);
         }
-        if (output.size() == 4) {
-            std::istringstream (output[0]) >> x1;
-            std::istringstream (output[1]) >> x2;
-            std::istringstream (output[2]) >> x3;
-            tmp_color = output[3];
-        }
-        else {
+        if (output.size() != 4) {
             return static_cast<int>(ERROR_TYPE::NOT_ENOUGHT_DATA);
         }
-
-        FlatGeometryFig* new_obj = new Triangle(x1, x2, x3, tmp_color);
-
-        if (new_obj->getColor() == COLOR_FIGURE::ERROR) {
+        
+        FlatGeometryFig* new_obj = new Triangle();
+        if (new_obj->convertToEnum(output[3]) == COLOR_FIGURE::ERROR) {
             return static_cast<int>(ERROR_TYPE::COLOR_NOT_EXIST);
         }
-
-        objs->addList(new_obj);
+        
+        if (!static_cast<Triangle*>(new_obj)->init(output[0], output[1], output[2], output[3])) {
+            objs->addList(new_obj);
+        }
+        else {
+            return static_cast<int>(ERROR_TYPE::BAD_INPUT);
+        }
     }
     else {
         return static_cast<int>(ERROR_TYPE::NOT_FOUND_OBJ);

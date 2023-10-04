@@ -67,6 +67,17 @@ TEST(AddTests, TestCircleWithoutColor)
     ASSERT_EQ(expected, actual);
 }
 
+TEST(AddTests, TestCircleBadInputColor)
+{
+    const auto expected = static_cast<int>(ERROR_TYPE::BAD_INPUT);
+
+    MainProcess *mp = new MainProcess();
+    std::string test_bad_input = "circle 1 gggg 3 red";
+    const auto actual = mp->commandAdd(test_bad_input);
+
+    ASSERT_EQ(expected, actual);
+}
+
 TEST(AddTests, TestBadColorCircle)
 {
     const auto expected = static_cast<int>(ERROR_TYPE::COLOR_NOT_EXIST);
@@ -391,10 +402,10 @@ TEST(DelTests, TestDeleteExistTriangle)
 
 TEST(ListTests, TestAddFirstElemList)
 {
-    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    FlatGeometryFig* new_obj = new Circle();
+    static_cast<Circle*>(new_obj)->init("1", "2", "3", "red");
     List *objs = new List();
 
-    
     try {
         objs->addList(new_obj);
     }
@@ -409,7 +420,9 @@ TEST(ListTests, TestAddFirstElemList)
 
 TEST(ListTests, TestAddNextElemList)
 {
-    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    FlatGeometryFig* new_obj = new Circle();
+    static_cast<Circle*>(new_obj)->init("1", "2", "3", "red");
+
     List *objs = new List();
     objs->addList(new_obj);
     const auto expected = objs->getSize() + 1;
@@ -428,7 +441,9 @@ TEST(ListTests, TestAddNextElemList)
 
 TEST(ListTests, TestAddNextElemListAfterDel)
 {    
-    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    FlatGeometryFig* new_obj = new Circle();
+    static_cast<Circle*>(new_obj)->init("1", "2", "3", "red");
+
     List *objs = new List();
     objs->addList(new_obj);
     objs->addList(new_obj);
@@ -449,7 +464,8 @@ TEST(ListTests, TestAddNextElemListAfterDel)
 
 TEST(ListTests, TestDeleteFirstElemList)
 {
-    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    FlatGeometryFig* new_obj = new Circle();
+    static_cast<Circle*>(new_obj)->init("1", "2", "3", "red");
 
     List *objs = new List();
     objs->addList(new_obj);
@@ -464,19 +480,19 @@ TEST(ListTests, TestDeleteFirstElemList)
         FAIL() << error_message;
     }
 
-    if (objs->getNode(1)->next != objs->getNode(0)) {
-        FAIL() << "ERROR!";
+    if (objs->getNode(0)->next != objs->getNode(1)) {
+        FAIL() << "ERROR! Pointer to next is not true";
     }
 
     const auto actual = objs->getSize();
-
     ASSERT_EQ(expected, actual);
 }
 
 TEST(ListTests, TestDeleteMediumElemList)
 {
     const auto expected = static_cast<int>(ERROR_TYPE::OK);
-    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    FlatGeometryFig* new_obj = new Circle();
+    static_cast<Circle*>(new_obj)->init("1", "2", "3", "red");
 
     List *objs = new List();
     objs->addList(new_obj);
@@ -495,14 +511,14 @@ TEST(ListTests, TestDeleteMediumElemList)
     }
 
     const auto actual = static_cast<int>(ERROR_TYPE::OK);
-
     ASSERT_EQ(expected, actual);
 }
 
 TEST(ListTests, TestDeleteLastElemList)
 {
     const auto expected = static_cast<int>(ERROR_TYPE::OK);
-    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    FlatGeometryFig* new_obj = new Circle();
+    static_cast<Circle*>(new_obj)->init("1", "2", "3", "red");
 
     List *objs = new List();
     objs->addList(new_obj);
@@ -527,7 +543,8 @@ TEST(ListTests, TestDeleteLastElemList)
 TEST(ListTests, TestDeleteNotExistElemList)
 {
     const auto expected = static_cast<int>(ERROR_TYPE::OK);
-    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    FlatGeometryFig* new_obj = new Circle();
+    static_cast<Circle*>(new_obj)->init("1", "2", "3", "red");
 
     List *objs = new List();
     objs->addList(new_obj);

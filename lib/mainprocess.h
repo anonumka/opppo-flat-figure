@@ -17,7 +17,8 @@ enum class ERROR_TYPE {
     LIST_EMPTY = 5,
     FILE_NOT_FOUND = 6,
     BAD_REMOVE = 7,
-    ERROR = 8
+    BAD_INPUT = 8,
+    ERROR = 9
 };
 
 class MainProcess

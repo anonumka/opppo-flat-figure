@@ -51,24 +51,60 @@ std::string FlatGeometryFig::convertToString(COLOR_FIGURE color) {
     return "error";
 }
 
-Circle::Circle(int x, int y, int r, std::string color) : FlatGeometryFig () {
-    this->x = x;
-    this->y = y;
-    this->r = r;
+int Circle::init(std::string x, std::string y, std::string r, std::string color) {
+    int new_x = 0, new_y = 0, new_r = 0;
+    try {
+        new_x = std::stoi(x);
+        new_y = std::stoi(y);
+        new_r = std::stoi(r);
+    }
+    catch(std::exception& e) {
+        std::cout << "Error converting" << '\n';
+        return 1;
+    }
+    
+    this->x = new_x;
+    this->y = new_y;
+    this->r = new_r;
     this->color = this->convertToEnum(color);
     this->date_edit = current_date();
+    return 0;
 }
 
-Rectangle::Rectangle(float x1, float x2, std::string color) : FlatGeometryFig () {
-    this->x1 = x1;
-    this->x2 = x2;
+int Rectangle::init(std::string x1, std::string x2, std::string color) {
+    int new_x1 = 0, new_x2 = 0;
+    try {
+        new_x1 = std::stof(x1);
+        new_x2 = std::stof(x2);
+    }
+    catch(std::exception& e) {
+        std::cout << "Error converting" << '\n';
+        return 1;
+    }
+
+    this->x1 = new_x1;
+    this->x2 = new_x2;
     this->color = this->convertToEnum(color);
     this->date_edit = current_date();
+    return 0;
 }
 
-Rectangle::Rectangle(float x1, float x2, std::string color) : FlatGeometryFig () {
-    this->x1 = x1;
-    this->x2 = x2;
+int Triangle::init(std::string x1, std::string x2, std::string x3, std::string color) {
+    int new_x1 = 0, new_x2 = 0, new_x3 = 0;
+    try {
+        new_x1 = std::stof(x1);
+        new_x2 = std::stof(x2);
+        new_x3 = std::stof(x3);
+    }
+    catch(std::exception& e) {
+        std::cout << "Error converting" << '\n';
+        return 1;
+    }
+
+    this->x1 = new_x1;
+    this->x2 = new_x2;
+    this->x3 = new_x3;
     this->color = this->convertToEnum(color);
     this->date_edit = current_date();
+    return 0;
 }
