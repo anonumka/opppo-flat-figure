@@ -21,3 +21,4 @@ target_link_libraries(test_program
 add_test(GeneralWork test_program)
 add_test(AddTests test_program)
 add_test(DelTests test_program)
+add_test(ListTests test_program)

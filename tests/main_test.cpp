@@ -389,6 +389,161 @@ TEST(DelTests, TestDeleteExistTriangle)
     ASSERT_EQ(expected, actual);
 }
 
+TEST(ListTests, TestAddFirstElemList)
+{
+    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    List *objs = new List();
+
+    
+    try {
+        objs->addList(new_obj);
+    }
+    catch (const char* error_message) {
+        std::cout << '\n' << error_message << '\n';
+        return;
+    }
+    const auto expected = objs->getSize();
+    const auto actual = objs->getSize();
+    ASSERT_EQ(expected, actual);
+}
+
+TEST(ListTests, TestAddNextElemList)
+{
+    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    List *objs = new List();
+    objs->addList(new_obj);
+    const auto expected = objs->getSize() + 1;
+    
+    try {
+        objs->addList(new_obj);
+    }
+    catch (const char* error_message) {
+        std::cout << '\n' << error_message << '\n';
+        return;
+    }
+    
+    const auto actual = objs->getSize();
+    ASSERT_EQ(expected, actual);
+}
+
+TEST(ListTests, TestAddNextElemListAfterDel)
+{    
+    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+    List *objs = new List();
+    objs->addList(new_obj);
+    objs->addList(new_obj);
+    objs->deleteElem(1);
+
+    const auto expected = objs->getSize() + 1;
+    
+    try {
+        objs->addList(new_obj);
+    }
+    catch (const char* error_message) {
+        FAIL() << error_message;
+    }
+
+    const auto actual = objs->getSize();
+    ASSERT_EQ(expected, actual);
+}
+
+TEST(ListTests, TestDeleteFirstElemList)
+{
+    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+
+    List *objs = new List();
+    objs->addList(new_obj);
+    objs->addList(new_obj);
+    objs->addList(new_obj);
+    const auto expected = objs->getSize()-1;
+
+    try {
+        objs->deleteElem(0);
+    }
+    catch (const char* error_message) {
+        FAIL() << error_message;
+    }
+
+    if (objs->getNode(1)->next != objs->getNode(0)) {
+        FAIL() << "ERROR!";
+    }
+
+    const auto actual = objs->getSize();
+
+    ASSERT_EQ(expected, actual);
+}
+
+TEST(ListTests, TestDeleteMediumElemList)
+{
+    const auto expected = static_cast<int>(ERROR_TYPE::OK);
+    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+
+    List *objs = new List();
+    objs->addList(new_obj);
+    objs->addList(new_obj);
+    objs->addList(new_obj);
+
+    try {
+        objs->deleteElem(1);
+    }
+    catch (const char* error_message) {
+        FAIL() << error_message;
+    }
+
+    if (objs->getNode(1)->next != objs->getNode(0)) {
+        FAIL() << "ERROR!";
+    }
+
+    const auto actual = static_cast<int>(ERROR_TYPE::OK);
+
+    ASSERT_EQ(expected, actual);
+}
+
+TEST(ListTests, TestDeleteLastElemList)
+{
+    const auto expected = static_cast<int>(ERROR_TYPE::OK);
+    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+
+    List *objs = new List();
+    objs->addList(new_obj);
+    objs->addList(new_obj);
+    objs->addList(new_obj);
+
+    try {
+        objs->deleteElem(2);
+    }
+    catch (const char* error_message) {
+        FAIL() << error_message;
+    }
+
+    if (objs->getNode(1)->next != objs->getNode(0)) {
+        FAIL() << "ERROR!";
+    }
+
+    const auto actual = static_cast<int>(ERROR_TYPE::OK);
+    ASSERT_EQ(expected, actual);
+}
+
+TEST(ListTests, TestDeleteNotExistElemList)
+{
+    const auto expected = static_cast<int>(ERROR_TYPE::OK);
+    FlatGeometryFig* new_obj = new Circle(1, 2, 3, "red");
+
+    List *objs = new List();
+    objs->addList(new_obj);
+
+    try {
+        objs->deleteElem(99999);
+        FAIL() << "ERROR! Delete a obj, which more than size a list";
+    }
+    catch (std::out_of_range const & err) {
+        EXPECT_EQ(err.what(), std::string("Out of range"));
+    }
+    catch(...) {
+        FAIL() << "ERROR! Another a error";
+    }
+}
+
 int main()
 {
     ::testing::InitGoogleTest();

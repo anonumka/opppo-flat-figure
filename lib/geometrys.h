@@ -43,14 +43,9 @@ class Circle : public FlatGeometryFig {
 private:
     int x, y, r;
 public:
-    Circle(int x, int y, int r, std::string color)
-        : FlatGeometryFig () {
-        this->x = x;
-        this->y = y;
-        this->r = r;
-        this->color = this->convertToEnum(color);
-        this->date_edit = current_date();
-    }
+    Circle(int x, int y, int r, std::string color);
+
+    int Circle::init();
 
     void print() override {
         std::cout << "circle (" << x << ", " << y << ", " << r << "), color = " << convertToString(color)

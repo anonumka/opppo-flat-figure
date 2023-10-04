@@ -18,6 +18,7 @@ public:
 
     void addList(FlatGeometryFig* new_obj);
     FlatGeometryFig *getElem(int ind);
+    Node *getNode(int ind);
     int getSize();
     void deleteElem(int i);
     void deleteList();

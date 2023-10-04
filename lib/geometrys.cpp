@@ -50,3 +50,25 @@ std::string FlatGeometryFig::convertToString(COLOR_FIGURE color) {
 
     return "error";
 }
+
+Circle::Circle(int x, int y, int r, std::string color) : FlatGeometryFig () {
+    this->x = x;
+    this->y = y;
+    this->r = r;
+    this->color = this->convertToEnum(color);
+    this->date_edit = current_date();
+}
+
+Rectangle::Rectangle(float x1, float x2, std::string color) : FlatGeometryFig () {
+    this->x1 = x1;
+    this->x2 = x2;
+    this->color = this->convertToEnum(color);
+    this->date_edit = current_date();
+}
+
+Rectangle::Rectangle(float x1, float x2, std::string color) : FlatGeometryFig () {
+    this->x1 = x1;
+    this->x2 = x2;
+    this->color = this->convertToEnum(color);
+    this->date_edit = current_date();
+}

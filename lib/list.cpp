@@ -29,7 +29,7 @@ void List::addList(FlatGeometryFig* new_obj) {
 
 void List::deleteElem(int i) {
     if (size <= i) {
-        return;
+        throw std::out_of_range("Out of range");
     }
 
     if (i == 0) {
@@ -98,6 +98,17 @@ FlatGeometryFig* List::getElem(int ind) {
 
     obj = tmp_elem->fig;
     return obj;
+}
+
+Node* List::getNode(int ind) {
+    FlatGeometryFig* obj = nullptr;
+
+    Node *tmp_elem = head;
+    for (int i = 0; i < ind; i++) {
+        tmp_elem = tmp_elem->next;
+    }
+
+    return tmp_elem;
 }
 
 int List::getSize() {
